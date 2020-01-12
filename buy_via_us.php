@@ -1,6 +1,7 @@
 <?php include "includes/header.php" ?>
 <div class="container">
-	
+
+
 	<h2 style="border-bottom: 3px solid #ddd;" class="text-center mt-4 mb-4">Order processing</h2>
 	<p style="border-bottom: 3px solid green;color:red;" class="text-center mt-4 mb-4">***[ If The Product is Delivered By Kenabecha then You have to pay Delivery Charge as Your Product Category and Type When Receiving Your Product. ]***</p>
 	<div class="row" style="min-height: 550px;">
@@ -89,13 +90,18 @@
                       </select>
                      </div>
 
-                      <div class="form-group">
+                     <div class="form-group">
                        <label class="" for="">Payment Method</label>
-                        <select class="form-control" name="p_method" id="">
-                        <option value="user_card">From My Card</option>
+                        <select class="form-control" name="p_method" onchange="yesnoCheck(this);" id="">
                         <option value="cash_on_del">Cash On Delivery</option>
+						<option value="user_card">From My Card</option>
                       </select>
                      </div>
+					 <div class="form-group" id="ifYes" style="display: none;">
+						<label for="pin">Enter Your Card Number:</label> 
+						<input type="text" class="form-control" id="pin" name="pin" /><br />
+					</div>
+					
                      <input type="hidden" name="seller_email" value="<?php echo $post_user_email; ?>">
                      <input type="hidden" name="buyer_email" value="<?php echo $_SESSION['user_email']; ?>">
                      <input type="hidden" name="post_id" value="<?php echo $post_id; ?>">
@@ -110,6 +116,7 @@
 
 				
 			</div>
+
 		</div>
 	</div>
 	
@@ -117,3 +124,13 @@
 
 		
 <?php include "includes/footer.php" ?>	
+ <script>
+	function yesnoCheck(that) {
+	if (that.value == "user_card") {
+ // alert("check");
+		document.getElementById("ifYes").style.display = "block";
+	} else {
+		document.getElementById("ifYes").style.display = "none";
+	}
+}
+</script>

@@ -183,10 +183,10 @@ button.bttn {
 										$numbz = $notf['user_notf'];
 										$_SESSION['user_notification']=$numbz;
 
-										// echo $numbz;
+										 // echo $_SESSION['user_notification'];
 
 
-									$queryx="SELECT * FROM post WHERE post_status= 1 AND post_user_email != '$user_email' ";
+									$queryx="SELECT * FROM post WHERE post_status= 1 AND post_user_email != '$user_email' AND selling_status = 0 ";
 									$resultx = mysqli_query($connection,$queryx);
 
 									if ($resultx) {
@@ -209,14 +209,14 @@ button.bttn {
 									if ($notification>0) {
 										
 									
-									$query = "SELECT * FROM post WHERE post_status = 1 AND post_user_email != '$user_email' ORDER BY post_id DESC LIMIT $notification ";
+									$query = "SELECT * FROM post WHERE post_status = 1 AND post_user_email != '$user_email' AND selling_status = 0 ORDER BY post_id DESC LIMIT $notification ";
 									$result = mysqli_query($connection,$query);
 									if ($result) {
 										$num = mysqli_num_rows($result);
 										if ($num>0){
 
 
-									$qr = "SELECT * FROM post WHERE post_user_email = '$user_email' AND post_mark = 1";
+									$qr = "SELECT * FROM post WHERE post_user_email = '$user_email' AND post_mark = 1 AND selling_status = 0 ";
 									$rlt = mysqli_query($connection,$qr);
 									$ap_notf = mysqli_num_rows($rlt);
 											
@@ -245,7 +245,7 @@ button.bttn {
 
 											<?php	}if($ap_notf>0){ ?>
 											
-											<a style="color: green;" class="dropdown-item" href="post_an_ad.php">Your<?php echo " ".$ap_notf." "; ?> Post Has</br>  been Approved.</a>
+											<a style="color: green;" class="dropdown-item" href="post_an_ad.php?markaprv">Your<?php echo " ".$ap_notf." "; ?> Post Has</br>  been Approved.</a>
 
 
 											<?php }
@@ -258,7 +258,11 @@ button.bttn {
 												<a style="color:red;" class="dropdown-item" href="?mrk_all">Mark All as Read</a>
 
 
-											<?php }}}else{
+											<?php
+											 }
+										}
+
+										}else{
 
 											$qr = "SELECT * FROM post WHERE post_user_email = '$user_email' AND post_mark = 1";
 											$rlt = mysqli_query($connection,$qr);
@@ -272,7 +276,7 @@ button.bttn {
 										<div class="dropdown-menu">
 
 												
-											<a style="color: green;" class="dropdown-item" href="post_an_ad.php">Your<?php echo " ".$ap_notf." "; ?> Post Has</br>  been Approved.</a>
+											<a style="color: green;" class="dropdown-item" href="post_an_ad.php?markaprv">Your<?php echo " ".$ap_notf." "; ?> Post Has</br>  been Approved.</a>
 
 												<a style="color:red;" class="dropdown-item" href="?mrk_all">Mark All as Read</a>
 
@@ -303,13 +307,11 @@ button.bttn {
 							if (isset($_GET['mrk_all'])) {
 
 								$user_email=$_SESSION['user_email'];
-								$pst_mrk =0;
-
+								
 								$numxsx=$_SESSION['user_all_not'];
 
-								// $query = "update  post set post_mark = $pst_mrk where post_user_email = '$user_email' ";
 
-								 $query = "update  users set user_notf = $numxsx where user_email = '$user_email' ";
+								 $query = "update users set user_notf = $numxsx where user_email = '$user_email' ";
 
 							 $post_as_mark = mysqli_query($connection,$query);
 
@@ -402,6 +404,8 @@ button.bttn {
   
 </form>
   </div>
+
+
 
 </div>
 

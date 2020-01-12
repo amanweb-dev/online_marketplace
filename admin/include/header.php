@@ -73,7 +73,7 @@ $fm = new formate();
 
                                         while($rraaww = mysqli_fetch_assoc($msg_rslt)){
                                          $m_id =  $rraaww['m'];
-                                         $m_user_id =  $rraaww['user_id'];
+                                         // $m_user_id =  $rraaww['user_id'];
                                          $m_user_name =  $rraaww['m_user_name'];
                                          // $massages =  $rraaww[' massages'];
                                          // $m_id =  $rraaww['m'];

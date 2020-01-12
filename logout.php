@@ -5,6 +5,6 @@ session_destroy();
 $_SESSION['user_email'] = null; 
 $_SESSION['user_pass'] =null; 
 $_SESSION['user_id'] =null; 
-header("Location: ads.php" );
+header("Location: index.php" );
 
  ?>

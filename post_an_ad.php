@@ -1,4 +1,6 @@
-<?php include "includes/header.php" ?>
+<?php include "includes/header.php";
+global $connection;
+ ?>
 
 
 <?php 
@@ -14,11 +16,25 @@ if (empty($_SESSION['user_email']) || empty($_SESSION['user_pass'])) {
 
  ?>
 
+ <?php 
+if (isset($_GET['dl_post_id'])) {
+$dl_post_id = $_GET['dl_post_id'];
+
+$dl_qry = "DELETE FROM post WHERE post_id = $dl_post_id ";
+$dl_qry_rslt = mysqli_query($connection,$dl_qry);
+if ($dl_qry_rslt) {
+	header("Location:post_an_ad.php");
+}
+}
+
+
+  ?>
+
 
 
 <?php 
 //start post Add Query
-global $connection;
+
 if (isset($_POST['post_ad'])) {
 	$title=mysqli_real_escape_string($connection,$_POST['title']);
 	$price=mysqli_real_escape_string($connection,$_POST['price']);
@@ -42,7 +58,7 @@ $post_create_query_result = mysqli_query($connection,$post_create_query);
 if (!$post_create_query_result) {
 	die('post_create_query_result failed '.mysqli_error($connection));
 }else{
-	echo "post has been created";
+	echo "<p style='color:green;font-size:27px;' class='text-center mt-3'>You have posted an ads successfully.Your ads is under review.Please Wait..We will notify You.</p>";
 }
 
 }
@@ -64,7 +80,7 @@ if (isset($_GET['edit'])) {
 
 	while ($row=mysqli_fetch_assoc($post_edit_query_result)) {
 		$post_id=$row['post_id'];
-		$post_title=$row['post_title'];
+		$post_titless=$row['post_title'];
 		$post_price=$row['post_price'];
 		$post_contact=$row['post_contact'];
 		$post_condition=$row['post_condition'];
@@ -85,6 +101,7 @@ if (isset($_POST['edit_post'])) {
 	$location=mysqli_real_escape_string($connection,$_POST['location']);
 	$post_content=mysqli_real_escape_string($connection,$_POST['post_content']);
 	$post_id_edit=mysqli_real_escape_string($connection,$_POST['post_id_edit']);
+	$pst_stts =0;
 
  ///image file query
       $post_img = $_FILES['post_img']['name'];
@@ -94,6 +111,7 @@ if (isset($_POST['edit_post'])) {
 
   ///if image not set
       if (empty($post_img)) {
+
             $img_query = "SELECT * FROM post WHERE post_id = $post_id_edit ";
             $select_post_image = mysqli_query($connection,$img_query);
             while($row=mysqli_fetch_assoc($select_post_image)) {
@@ -109,6 +127,7 @@ if (isset($_POST['edit_post'])) {
         $query_for_post_update .= "post_category_id = {$category}, ";
         $query_for_post_update .= "post_location = '{$location}', ";
         $query_for_post_update .= "post_image = '{$post_img}', ";
+        $query_for_post_update .= "post_status = {$pst_stts}, ";
         $query_for_post_update .= "post_details = '{$post_content}' ";
                 
         $query_for_post_update .= "WHERE post_id = {$post_id_edit} ";
@@ -117,7 +136,7 @@ if (isset($_POST['edit_post'])) {
         if (!$update_post) {
             die("update post failed".mysqli_error($connection) );
         }else{
-          echo "post update successfully";
+          echo "<p style='color:green;font-size:27px;' class='text-center mt-3'>You have Updated an ads successfully.Your ads is under review.Please Wait..We will notify You.</p>";
         }
 
 }
@@ -149,12 +168,25 @@ if (isset($_POST['edit_post'])) {
 	<div class="row">
 		<div class="col-md-6">
 			<h2 class="text-center"> Your All Ad</h2>
+			<table style=" font-family: arial, sans-serif;border-collapse: collapse;width: 100%;">
+			  <tr>
+			    <th style=" border: 1px solid #dddddd;text-align: left;padding: 8px;">Title</th>
+			    <th style=" border: 1px solid #dddddd;text-align: left;padding: 8px;">Approval Status</th>
+			    <th style=" border: 1px solid #dddddd;text-align: left;padding: 8px;">Selling Status</th>
+			    <th style=" border: 1px solid #dddddd;text-align: left;padding: 8px;">View</th>
+			    <th style=" border: 1px solid #dddddd;text-align: left;padding: 8px;">Edit</th>
+			    <th style=" border: 1px solid #dddddd;text-align: left;padding: 8px;">Delete</th>
+			  </tr>
+				
 			<?php 
 				global $connection;
 
+				if (isset($_GET['markaprv'])) {
+
 					$updt_post_mark = "UPDATE post SET post_mark = 0  WHERE post_user_email = '$user_email' ";
 					$rs = mysqli_query($connection,$updt_post_mark);
-
+					
+				}
 
 
 				$view_add_query = "SELECT * FROM post WHERE post_user_email = '$user_email' ";
@@ -176,28 +208,28 @@ if (isset($_POST['edit_post'])) {
 				
 
 				?>
+
+
+
+
+						<tr>
+						<td style=" border: 1px solid #dddddd;text-align: left;padding: 8px;"><?php echo $post_titles; ?></td>
+						<td style=" border: 1px solid #dddddd;text-align: left;padding: 8px;"><?php echo ($post_status==1)?"Approved" : "Pending"; ?></td>
+						<td style=" border: 1px solid #dddddd;text-align: left;padding: 8px;"><?php echo  ($selling_status==3)?"Sold Out" : "Available"; ?></td>
+						<td style=" border: 1px solid #dddddd;text-align: left;padding: 8px;"><a href="single.php?post_id=<?php echo $post_ids; ?>"><button class="btn btn-success">View</button></a></td>
+						<td style=" border: 1px solid #dddddd;text-align: left;padding: 8px;"><a href="post_an_ad.php?edit=<?php echo $post_ids; ?>"><button class="btn btn-primary">Edit</button></a></td>
+						<td style=" border: 1px solid #dddddd;text-align: left;padding: 8px;"><a onclick="return confirm('Are you sure to delete?')" href="?dl_post_id=<?php echo $post_ids; ?>"><button  class="btn btn-danger">Delete</button></a></td>
+						
+						</tr>
+ 
+		
 				
 
 
-			<div class="row single-ad-item mb-3">
-				<div class="col-md-3">
-					<img src="assets/img/<?php echo $post_images ?>" alt="myads">
-				</div>
-				<div class="col-md-9">
-					<a href="post_an_ad.php" class="single-ad-title"><?php echo $post_titles;  ?></a>
-					<p>
-						<span class="small mr-3"><?php echo $post_prices." "."TK"; ?></span>
-						<span class="small mr-3"><i class="fa fa-phone"></i><?php echo $post_contacts; ?></span>
-						<span style="color:red;" class="small ml-3"><?php echo $post_status==1?"Approved" : "Pending"; ?></span><span style="color:red;" class="small ml-3" ><?php echo $selling_status==1?"Sold Oot" : "Available"; ?></span>
-					</p>
-					<p><?php echo $post_detailses; ?></p>
-					<div class="row">
-					<span class="small mr-3"><button type='button' class='btn btn-danger'><?php echo "<a href='post_an_ad.php?edit= $post_ids '>Edit</a>"?></button></span> 
-					<span class="small"><button type='button' class='btn btn-danger'><?php echo "<a href='post_an_ad.php?delete= $post_ids '>Delrte</a>"?></button> </span>	
-					</div>
-				</div>
-			</div>
+			
 		<?php } ?>
+
+		</table>
 			
 
 		</div>
@@ -210,7 +242,7 @@ if (isset($_POST['edit_post'])) {
 				<form action="post_an_ad.php" method="post" enctype="multipart/form-data">
 					<div class="form-group">
 						<label for="">Post Title</label>
-						<input type="text" name="title" value="<?php echo isset($post_title) ? $post_title : ''; ?>" class="form-control">
+						<input type="text" name="title" value="<?php echo isset($post_titless) ? $post_titless : ''; ?>" class="form-control">
 					</div>
 					<div class="form-group">
 						<label for="">Price</label>
@@ -260,10 +292,10 @@ if (isset($_POST['edit_post'])) {
 					</div>
 					<div class="form-group">
 						<label for="post_content">Post Content:</label>
-						<?php if (isset($post_details)) {
-							echo "</br>".$post_details;
-						} ?>
-						<textarea class="form-control" name="post_content" id="" cols="20" rows="5"></textarea>
+						
+						<textarea class="form-control" name="post_content" id="" cols="20" rows="5"><?php if (isset($post_details)) {
+							echo $post_details;
+						} ?></textarea>
 					</div>
 					
 					<?php 

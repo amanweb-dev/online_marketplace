@@ -32,22 +32,20 @@
 						if (isset($_GET['post_id'])) {
 							$the_post_id=$_GET['post_id'];
 
-							if ($_SESSION['u_l']==true) {
+							
 
-								$pst_mrk =0;
+								
 								$user_notification =$_SESSION['user_notification'];
-								$final_not = $user_notification+1;
+								$final_not = ($user_notification+1);
 								$notf_user_email=$_SESSION['user_email'];
 
-							 $query = "update  users set user_notf = $final_not where user_email = '$notf_user_email' ";
-							 $post_as_mark = mysqli_query($connection,$query);
+							 $querym = "UPDATE users SET user_notf = $final_not WHERE user_email = '$notf_user_email' ";
+							 $post_as_markm = mysqli_query($connection,$querym);
+
+
+							 // update users set user_notf = $numxsx where user_email = '$user_email'
 								
-							}
-
-
-								
-
-
+							
 
 							$post_edit_query = "SELECT * FROM post WHERE post_id = $the_post_id AND post_status = 1 AND selling_status = 0";
 							$post_edit_query_result = mysqli_query($connection,$post_edit_query);

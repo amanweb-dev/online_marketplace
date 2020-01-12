@@ -75,13 +75,13 @@ if (empty($user_phto)) {
                                 <p><?php echo $user_phone; ?></p>
 
                                 <?php
-                                if ($_SESSION['u_l'] == true) {
+                                
                                     
                                 
-                                $my_email=$_SESSION['user_email'];
+                                $vsting_user_email=$_SESSION['vsting_user_email'];
                                 $limit=0;
 
-                                    $rtng_query = "SELECT * FROM orders WHERE seller_email = '$my_email' AND confirm_status = 3 OR buyer_email = '$my_email' AND confirm_status = 3";
+                                    $rtng_query = "SELECT * FROM orders WHERE seller_email = '$vsting_user_email' AND confirm_status = 3 OR buyer_email = '$vsting_user_email' AND confirm_status = 3 ";
                                     $rtng_query_rslt = mysqli_query($connection,$rtng_query);
                                     $rating_num=mysqli_num_rows($rtng_query_rslt);
 
@@ -119,7 +119,7 @@ if (empty($user_phto)) {
                                     }
 
 
-                                }
+                                
 
 
                                  ?>

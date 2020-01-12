@@ -35,7 +35,7 @@ if (isset($_POST['login'])) {
         $_SESSION['user_cht_phto'] = $user_cht_phto; 
         $_SESSION['user_pass'] = $user_pass; 
 
-         header("Location: post_an_ad.php");
+         header("Location: user_profile.php");
 		}else{
 			 echo "<p style='color:red' class='text-center mt-3'>Password Wrong</br>Please Enter A Valid Password</p>";
 		}

@@ -60,6 +60,7 @@ $fm = new formate();
  <body>
 
  <div class="login-page">
+  <p style="font-size: 32px;text-align: center">Admin Login</p>
   <div class="form">
     <form class="login-form" action="login.php" method="post">
       <input type="text" name="uname" placeholder="Enter Username"/>

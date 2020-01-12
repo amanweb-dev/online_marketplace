@@ -9,47 +9,61 @@ if ($login == true) {
 $buyer_email_sessn=$_SESSION['user_email'];
 
 if (isset($_POST['cnfrm_order'])) {
-	$post_id = $_POST['post_id'];
-	$seller_email = $_POST['seller_email'];
-	$buyer_email = $_POST['buyer_email'];
-	$customer_name = $_POST['customer_name'];
-	$customer_number = $_POST['customer_number'];
-	$customer_adrss = $_POST['customer_adrss'];
-	$dlvry_option = $_POST['dlvry_option'];
-	$payment_method = $_POST['p_method'];
-	$product_price = $_POST['product_price'];
+  $post_id = $_POST['post_id'];
+  $seller_email = $_POST['seller_email'];
+  $buyer_email = $_POST['buyer_email'];
+  $customer_name = $_POST['customer_name'];
+  $customer_number = $_POST['customer_number'];
+  $customer_adrss = $_POST['customer_adrss'];
+  $dlvry_option = $_POST['dlvry_option'];
+  $payment_method = $_POST['p_method'];
+  $product_price = $_POST['product_price'];
 
-	if ($payment_method =='user_card') {
+  
 
-		$blnce_query = "SELECT user_card_bl FROM users WHERE user_email = '$buyer_email_sessn' ";
+  if ($payment_method =='user_card') {
+  $pin = $_POST['pin'];
+  $query_for_pin = "SELECT user_card FROM users WHERE user_email ='$buyer_email_sessn' ";
+  $q_rs = mysqli_query($connection,$query_for_pin);
+  $row = mysqli_fetch_array($q_rs);
+  $user_card = $row['user_card'];
+  
+  $len = strlen($user_card);
+  $arr1 = str_split($user_card);
+  
+  $card_pin = $arr1[0].$arr1[1].$arr1[$len-2].$arr1[$len-1];
+  
+  if($pin==$card_pin){
+  
+  $blnce_query = "SELECT user_card_bl FROM users WHERE user_email = '$buyer_email_sessn' ";
 
-	$blnce_query_result = mysqli_query($connection,$blnce_query);
-	$select_row = mysqli_fetch_array($blnce_query_result);
-	$tk = $select_row['user_card_bl'];
+  $blnce_query_result = mysqli_query($connection,$blnce_query);
+  $select_row = mysqli_fetch_array($blnce_query_result);
+  $tk = $select_row['user_card_bl'];
 
-	if ($tk >= $product_price) {
-
-
-		$orders_query = "INSERT INTO orders(ordr_post_id,seller_email,buyer_email,receiver_name,receiver_number,receiver_address,delivery_option,payment_method,total_bill) VALUES({$post_id},'{$seller_email}','{$buyer_email}','{$customer_name}','{$customer_number}','{$customer_adrss}','{$dlvry_option}','{$payment_method}',{$product_price}) ";
-
-		$orders_query_result = mysqli_query($connection,$orders_query);
-
-		if ($orders_query_result) {
-
-			$updt_tk = $tk-$product_price;
-
-			$update_user_tk_query = "UPDATE users SET user_card_bl = $updt_tk WHERE user_email = '$buyer_email_sessn' ";
-			$update_user_tk_query_rslt = mysqli_query($connection,$update_user_tk_query);
+  if ($tk >= $product_price) {
 
 
-			echo "<p style='text-align:center'>Order Confirmation Successfull</br> Thank You for purchasing.We Will Contact  you soon</p>";
+    $orders_query = "INSERT INTO orders(ordr_post_id,seller_email,buyer_email,receiver_name,receiver_number,receiver_address,delivery_option,payment_method,total_bill) VALUES({$post_id},'{$seller_email}','{$buyer_email}','{$customer_name}','{$customer_number}','{$customer_adrss}','{$dlvry_option}','{$payment_method}',{$product_price}) ";
 
-			$select_rcnt_ordr_query = "SELECT * FROM orders WHERE ordr_post_id = $post_id AND seller_email = '$seller_email' AND  buyer_email = '$buyer_email' AND total_bill = $product_price ORDER BY ordr_id DESC ";
-			$select_rcnt_ordr_rlst =mysqli_query($connection,$select_rcnt_ordr_query);
+    $orders_query_result = mysqli_query($connection,$orders_query);
 
-			$roww = mysqli_fetch_array($select_rcnt_ordr_rlst);
+    if ($orders_query_result) {
 
-			$ordr_id = $roww['ordr_id'];
+      $updt_tk = $tk-$product_price;
+
+      $update_user_tk_query = "UPDATE users SET user_card_bl = $updt_tk WHERE user_email = '$buyer_email_sessn' ";
+      $update_user_tk_query_rslt = mysqli_query($connection,$update_user_tk_query);
+
+
+      echo "<p style='text-align:center'>Order Confirmation Successfull</br> Thank You for purchasing.We Will Contact  you soon</p>";
+
+      $select_rcnt_ordr_query = "SELECT * FROM orders WHERE ordr_post_id = $post_id AND seller_email = '$seller_email' AND  buyer_email = '$buyer_email' AND total_bill = $product_price ORDER BY ordr_id DESC ";
+      $select_rcnt_ordr_rlst =mysqli_query($connection,$select_rcnt_ordr_query);
+
+      $roww = mysqli_fetch_array($select_rcnt_ordr_rlst);
+
+      $ordr_id = $roww['ordr_id'];
             $ordr_post_id = $roww['ordr_post_id'];
             $seller_email = $roww['seller_email'];
             $buyer_email = $roww['buyer_email'];
@@ -62,13 +76,13 @@ if (isset($_POST['cnfrm_order'])) {
             $ordr_date = $roww['ordr_date'];
 
 
-			?>
+      ?>
 
-			<div class="container">
-				<div class="row">
-					<div class="col-md-6 offset-md-3">
-						<div id="printableArea">
-				<h2>Order Details</h2>
+      <div class="container">
+        <div class="row">
+          <div class="col-md-6 offset-md-3">
+            <div id="printableArea">
+        <h2>Order Details</h2>
              <table class="table">
               <thead>
                 <tr>
@@ -131,17 +145,17 @@ if (isset($_POST['cnfrm_order'])) {
             </table>
             
           </div>
-					</div>
-				</div>
-			
+          </div>
+        </div>
+      
 
 
            <div class="row mt-4 mb-4">
-           	<div class="col-md-6 offset-md-3">
+            <div class="col-md-6 offset-md-3">
 
-   				<input type="button" class="btn btn-primary" onclick="printDiv('printableArea')" value="print Order Details" />
-           		
-           	</div>
+          <input type="button" class="btn btn-primary" onclick="printDiv('printableArea')" value="print Order Details" />
+              
+            </div>
 
            
            </div>
@@ -152,34 +166,46 @@ if (isset($_POST['cnfrm_order'])) {
 
 
 
-			<?php
+      <?php
 
-		}
+    }
 
-		
+    
 
-	}else{
+  }else{
 
-		echo "<script>alert('Sorry You have not sufficient Balance');</script>";
-		echo "<script>window.location.href = 'ads.php'</script>";
-		
-	}
+    echo "<script>alert('Sorry You have not sufficient Balance');</script>";
+    echo "<script>window.location.href = 'ads.php'</script>";
+    
+  }
+  
+  
+}else{
+
+echo "<script>alert('Sorry You have entered incorrect pin');</script>";
+echo "<script>window.location.href = 'ads.php'</script>";
+
+} 
+  
+  
+
+  
 
 
-	}else{
+  }else{
 
 
-		$orders_query = "INSERT INTO orders(ordr_post_id,seller_email,buyer_email,receiver_name,receiver_number,receiver_address,delivery_option,payment_method,total_bill) VALUES({$post_id},'{$seller_email}','{$buyer_email}','{$customer_name}','{$customer_number}','{$customer_adrss}','{$dlvry_option}','{$payment_method}',{$product_price}) ";
+    $orders_query = "INSERT INTO orders(ordr_post_id,seller_email,buyer_email,receiver_name,receiver_number,receiver_address,delivery_option,payment_method,total_bill) VALUES({$post_id},'{$seller_email}','{$buyer_email}','{$customer_name}','{$customer_number}','{$customer_adrss}','{$dlvry_option}','{$payment_method}',{$product_price}) ";
 
-		$orders_query_result = mysqli_query($connection,$orders_query);
+    $orders_query_result = mysqli_query($connection,$orders_query);
 
-		if ($orders_query_result) {
+    if ($orders_query_result) {
 
-			echo "Order Confirmation Successfull</br> Thank You for purchasing. Please Check Your email. We will sent you an email soon";
+      echo "Order Confirmation Successfull</br> Thank You for purchasing. Please Check Your email. We will sent you an email soon";
 
-		}
+    }
 
-	}
+  }
 
 
 
@@ -190,7 +216,7 @@ if (isset($_POST['cnfrm_order'])) {
 
 
 
-	
+  
 }else{
 
 echo "<script>alert('Opps!! You Have to login First');</script>";
@@ -208,13 +234,13 @@ echo "<script>window.location.href = 'login.php'</script>";
 
 
 <div class="container">
-	
-	
-	
+  
+  
+  
 </div>
 
-		
-<?php include "includes/footer.php" ?>	
+    
+<?php include "includes/footer.php" ?>  
 <script type="text/javascript">     
    function printDiv(divName) {
      var printContents = document.getElementById(divName).innerHTML;

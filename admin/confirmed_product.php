@@ -15,11 +15,7 @@
 
         $update = $db->update($query);
         
-        // if ($update) {
-        //   echo "<p style='color:green;text-align:center;font-size:20px;'>Post Approved successfully</p>";
-        // }else{
-        //     echo "<p style='color:red;text-align:center;'>opps!! Post is not Approved</p>";
-        // }
+        
 
     }
 
@@ -72,14 +68,9 @@
                                         </thead>
                                         <tbody>
  
-
-
-
-
-
                                            
                                                  <?php 
-                                                        $query = "select * from orders where confirm_status = 2 ";
+                                                        $query = "SELECT * FROM orders WHERE confirm_status = 2 ";
 
                                                 $result = $db->select($query);
                                                 if ($result) {

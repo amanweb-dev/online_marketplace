@@ -82,7 +82,7 @@
 								<span class="small mr-3"><strong>Price : </strong><?php echo $post_price." BDT"; ?> </span>
 								<span class="small mr-3"><i class="fa fa-phone"></i><?php echo $post_contact;  ?></span>
 								<span class="small mr-3"><strong>Condition :</strong> <?php echo $post_condition; ?></span>
-								<span class="small mr-3"><strong>Category :</strong> <?php echo $post_category;  ?></span>
+								<!-- <span class="small mr-3"><strong>Category :</strong> <?php //echo $post_category;  ?></span> -->
 								<span class="small mr-3"><strong>Location :</strong> <?php echo $post_location; ?></span>
 							</p>
 							<div class="single-item-img p_img">

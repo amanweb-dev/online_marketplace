@@ -34,40 +34,51 @@
                                            $msg_id= $_GET['msg_id'];
                                            $_SESSION['msg_id'] = $msg_id;
 
+                                          
+
                                            $qry = "SELECT * FROM admin_massage WHERE msg_status = 0 AND m = $msg_id ";
                                             $msg_rslt = $db->select($qry);
+
+
+                                            if ($msg_rslt) {
+                                              
                                             $cnnt = mysqli_num_rows($msg_rslt);
 
                                              if ($msg_rslt && $cnnt>0) {
 
                                         while($msg_raw = mysqli_fetch_assoc($msg_rslt)){
                                          $m_id =  $msg_raw['m'];
-                                         $m_user_id =  $msg_raw['user_id'];
                                          $m_user_name =  $msg_raw['m_user_name'];
-                                         $massages =  $msg_raw['massages'];
                                          $m_user_email =  $msg_raw['m_user_email'];
+                                         $m_user_cntct =  $msg_raw['m_user_cntct'];
+                                         $massages =  $msg_raw['massages'];
 
                                          ?>
                                             
                                         <div class="row">
                                             <h3>From: <?php echo  $m_user_name; ?></h3>
+                                            <h3>Contact: <?php echo  $m_user_cntct; ?></h3>
                                             <h3>Email: <a href="https://mail.google.com/mail/u/0/?tab=rm&ogbl#sent?compose=new" target="_blank"><?php echo  $m_user_email; ?></a></h3>
                                             <h4>Message: </h4>
                                             <p><?php echo $massages; ?></p>
 
                                         </div>
+                                        
+                                        
+                                        <?php 
 
-
-
-
-
-                                        <?php }
-                                    }
-
-
-
-                                     $up_query = "UPDATE admin_massage SET msg_status = 1 ";
+                                        $up_query = "UPDATE admin_massage SET msg_status = 1  WHERE m = $m_id";
                                     $up_rslt =  $db->update($up_query);
+
+
+
+                                    }
+                                    }
+                                }
+
+
+
+                                     
                                 }
 
 

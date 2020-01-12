@@ -33,7 +33,13 @@
 						$view_post_query_result = mysqli_query($connection,$view_post_query);
 						if (!$view_post_query_result) {
 							die("view_add_query_result failed ".mysqli_error($connection));
-						}
+						}else{
+
+						$count = mysqli_num_rows($view_post_query_result);
+
+						if ($count>0) {
+							
+						
 
 						while ($row=mysqli_fetch_assoc($view_post_query_result)) {
 							$post_ids=$row['post_id'];
@@ -88,6 +94,22 @@
 								</div>
 
 								<?php	}
+							}else{?>
+
+								<div class="container">
+									<div class="row">
+										<div class="col-md-10">
+											<div class="fourzerofour">
+												<p>No Ads Found.</p>
+											</div>
+										</div>
+									</div>
+								</div>
+
+
+							<?php }
+
+						}
 
 					 }else{ ?>
 					<h3 class="text-center">All Ads</h3>

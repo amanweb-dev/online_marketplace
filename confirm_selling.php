@@ -33,7 +33,8 @@ if (isset($_GET['accept_id']) && isset($_GET['postid'])) {
 	$query = "UPDATE orders SET confirm_status = 2,seller_number='$contact' WHERE ordr_id = $accept_id AND  seller_email = '$amar_email' ";
 	$update = mysqli_query($connection,$query);
 	if ($update) {
-		echo "Product is Sold. We Will contact You Soon";
+		echo "<script>alert('product has benn sold.We will contact you soon');</script>";
+		echo "<script>window.location.href = 'user_profile.php';</script>";
 	}
 
 }
@@ -45,7 +46,8 @@ if (isset($_GET['reject_id'])) {
 	$query = "UPDATE orders SET confirm_status = 4 WHERE ordr_id = $reject_id AND  seller_email = '$amar_email' ";
 	$update = mysqli_query($connection,$query);
 	if ($update) {
-		echo "Selling Request is Rejected";
+		echo "<script>alert('elling Request is Rejected');</script>";
+		echo "<script>window.location.href = 'user_profile.php';</script>";
 	}
 
 }

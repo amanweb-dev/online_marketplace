@@ -1,10 +1,37 @@
-<?php include "includes/header.php" ?>
+<?php include "includes/header.php";
+global $connection;
+ ?>
+<?php 
+if (isset($_GET['byr_modify_ordr_id'])) {
+	$byr_modify_ordr_id = $_GET['byr_modify_ordr_id'];
+
+	$byr_updt_query = "UPDATE orders SET order_deletion_status=1 WHERE ordr_id = $byr_modify_ordr_id ";
+	$u_rslt = mysqli_query($connection,$byr_updt_query);
+
+
+}
+
+if (isset($_GET['slr_modify_ordr_id'])) {
+	$slr_modify_ordr_id = $_GET['slr_modify_ordr_id'];
+
+	$slr_updt_query = "UPDATE orders SET order_deletion_status=2 WHERE ordr_id = $slr_modify_ordr_id ";
+	$u_rslts = mysqli_query($connection,$slr_updt_query);
+
+
+}
+
+
+
+ ?>
+
+
+
 <?php 
 $login = $_SESSION['u_l'];
 if ($login==true){
 
 
-global $connection;
+
 if (isset($_SESSION['user_pass'])) {
 	$user_email_ss=$_SESSION['user_email']; 
 
@@ -151,107 +178,115 @@ if (isset($_POST['edit_profile'])) {
 				<?php }else{ ?>
 
 
-					            <div class="profile-content">
-			   <h2 class="text-center"> Your All Ad</h2>
-			   <table style=" font-family: arial, sans-serif;border-collapse: collapse;width: 100%;">
-			  <tr>
-			    <th style=" border: 1px solid #dddddd;text-align: left;padding: 8px;">Title</th>
-			    <th style=" border: 1px solid #dddddd;text-align: left;padding: 8px;">View</th>
-			    <th style=" border: 1px solid #dddddd;text-align: left;padding: 8px;">Edit</th>
-			    <th style=" border: 1px solid #dddddd;text-align: left;padding: 8px;">Delete</th>
-			  </tr>
-			<?php 
-				global $connection;
-				$view_add_query = "SELECT * FROM post WHERE post_user_email = '$user_email_ss' ";
-				$view_add_query_result = mysqli_query($connection,$view_add_query);
-				if (!$view_add_query_result) {
-					die("view_add_query_result failed ".mysqli_error($connection));
-				}
+			<div class="row">
+				<h2 style="text-align: center;">All buying Item</h2>
+				<table class="table table-bordered mb-4">
+				    <thead>
+				      <tr>
+				        <th>Item Name</th>
+				        <th>Buying Date</th>
+				        <th>Action</th>
+				      </tr>
+				    </thead>
+				    <tbody>
+				    	<?php 
+				    	$my_eml = $_SESSION['user_email'];
+				    		$buying_query = "SELECT orders.*,post.post_title FROM orders INNER JOIN post ON orders.ordr_post_id = post.post_id WHERE orders.buyer_email = '$my_eml' AND orders.confirm_status = 3 AND orders.order_deletion_status != 1 ";
 
-				while ($row=mysqli_fetch_assoc($view_add_query_result)) {
-					$post_ids=$row['post_id'];
-					$post_titles=$row['post_title'];
-					$post_prices=$row['post_price'];
-					$post_contacts=$row['post_contact'];
-					$post_images=$row['post_image'];
-					$post_detailses=$row['post_details'];
-					$post_status=$row['post_status'];
+				    	$buying_query_rs = mysqli_query($connection,$buying_query);
+				    	while ($row=mysqli_fetch_assoc($buying_query_rs)) {
+				    		$post_title = $row['post_title'];
+				    		$ordr_id = $row['ordr_id'];
+				    		$ordr_date = $row['ordr_date'];
 
-				?>
+				    		?>
+
+
+							 <tr>
+						        <td><?php echo $post_title; ?></td>
+						        <td><?php echo $ordr_date; ?></td>
+						        <td><a onclick="return confirm('Are you sure to delete?')" href="?byr_modify_ordr_id=<?php echo $ordr_id; ?>"><button type="submit" class="btn btn-danger">Delete</button></a></td>
+						        
+						     </tr>
+
+
+				    		<?php
+				    		
+				    	}
+
+
+				    	 ?>
+				      
+				    </tbody>
+				</table>
+			</div>
+
+			<div class="row mt-4">
+
+				<h2 style="text-align: center;">All Selling Item</h2>
+				<table class="table table-bordered">
+				    <thead>
+				      <tr>
+				        <th>Item Name</th>
+				        <th>Selling Date</th>
+				        <th>Action</th>
+				      </tr>
+				    </thead>
+				    <tbody>
+				      <?php 
+				    	$my_emls = $_SESSION['user_email'];
+				    		$buying_query = "SELECT orders.*,post.post_title FROM orders INNER JOIN post ON orders.ordr_post_id = post.post_id WHERE orders.seller_email = '$my_emls' AND orders.confirm_status = 3 AND orders.order_deletion_status != 2 ";
+
+				    	$buying_query_rs = mysqli_query($connection,$buying_query);
+				    	while ($row=mysqli_fetch_assoc($buying_query_rs)) {
+				    		$post_title = $row['post_title'];
+				    		$ordr_id = $row['ordr_id'];
+				    		$ordr_date = $row['ordr_date'];
+
+				    		?>
+
+
+							 <tr>
+						        <td><?php echo $post_title; ?></td>
+						        <td><?php echo $ordr_date; ?></td>
+						        <td><a onclick="return confirm('Are you sure to delete?')" href="?slr_modify_ordr_id=<?php echo $ordr_id; ?>"><button type="submit" class="btn btn-danger">Delete</button></a></td>
+						        
+						     </tr>
+
+
+				    		<?php
+				    		
+				    	}
+
+
+				    	 ?>
+				      
+				    </tbody>
+				</table>
 				
-
-						<tr>
-						<td style=" border: 1px solid #dddddd;text-align: left;padding: 8px;"><?php echo $post_titles ?></td>
-						<td style=" border: 1px solid #dddddd;text-align: left;padding: 8px;"><a href="single.php?post_id=<?php echo $post_ids; ?>"><button class="btn btn-success">View</button></a></td>
-						<td style=" border: 1px solid #dddddd;text-align: left;padding: 8px;"><a href="post_an_ad.php?edit=<?php echo $post_ids; ?>"><button class="btn btn-primary">Edit</button></a></td>
-						<td style=" border: 1px solid #dddddd;text-align: left;padding: 8px;"><a onclick="return confirm('Are you sure to delete?')" href="?dl_post_id=<?php echo $post_ids; ?>"><button  class="btn btn-danger">Delete</button></a></td>
-						
-						</tr>
-  
-
-		<?php } ?>
-		</table>
-            </div>
+			</div>
 
 
 				<?php 
-				if (isset($_GET['dl_post_id'])) {
-					$dl_post_id = $_GET['dl_post_id'];
-
-					$dl_qry = "DELETE FROM post WHERE post_id = $dl_post_id ";
-					$dl_qry_rslt = mysqli_query($connection,$dl_qry);
-					if ($dl_qry_rslt) {
-						header("Location:user_profile.php");
-					}
-				}
+				
 			}
 
-			 ?>
 
-			     <?php 
+	        if (isset($_GET['mrkmsg'])) {
+	            
+	        
+	        $chk_msg_id= $_SESSION['user_id'];
 
-        if (isset($_GET['mrkmsg'])) {
-            
-        
-        $chk_msg_id= $_SESSION['user_id'];
+	        $query = "UPDATE massage SET msg_status=1 WHERE reciever_id = $chk_msg_id ";
+	        $result = mysqli_query($connection,$query);
 
-        $query = "UPDATE massage SET msg_status=1 WHERE reciever_id = $chk_msg_id ";
-        $result = mysqli_query($connection,$query);
+	            
+	            }
 
-            
-            }
-
-         ?>
+	         ?>
 		</div>
 	</div>
 </div>
-
-
-<div class="hding">
-	<h1><i class="fa fa-star"></i>Contact Us<i class="fa fa-star"></i></h1>
-	<hr class="new5">
-</div>
-<div class="cntct-us">
-
-<div class="container">
-	
-	<div class="row">
-		<div class="col-md-6 offset-md-3">
-			<form action="contact.php" method="post" enctype="multipart/form-data">
-			  <div class="form-group">
-			    <label for="email">Write Us</label>
-			    <textarea class="form-control" name="admnmsg" id="" cols="30" rows="5"></textarea>
-			  </div>
-			  
-			  
-			  <button style="float: right;" type="submit" name="cntctus" class="btn btn-success">Send Us</button>
-			</form>
-		</div>
-	</div>
-
-</div>
-</div>
-
 
 <?php
 
