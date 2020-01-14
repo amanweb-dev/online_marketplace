@@ -45,7 +45,7 @@
         <div class="row">
           <div class="col-md-8 col-sm-6 col-xs-12">
             <p class="copyright-text" style="color:#fff;">Copyright &copy; <?php echo date('Y'); ?> All Rights Reserved by 
-         <a style="color:#fff;" href="index.php">Kenabecha</a></p>.
+         <a style="color:#fff;" href="index.php">Kenabecha</a></p>
             </p>
           </div>
 

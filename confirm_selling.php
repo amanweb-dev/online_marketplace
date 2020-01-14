@@ -46,7 +46,7 @@ if (isset($_GET['reject_id'])) {
 	$query = "UPDATE orders SET confirm_status = 4 WHERE ordr_id = $reject_id AND  seller_email = '$amar_email' ";
 	$update = mysqli_query($connection,$query);
 	if ($update) {
-		echo "<script>alert('elling Request is Rejected');</script>";
+		echo "<script>alert('Selling Request is Rejected');</script>";
 		echo "<script>window.location.href = 'user_profile.php';</script>";
 	}
 

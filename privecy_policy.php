@@ -3,7 +3,7 @@
 <div class="container">
     <div class="row">
         <div class="col-md-8 offset-md-2">
-            <h1 class="text-center mt-3 mb-3">APrivacy & Policy</h1>
+            <h1 class="text-center mt-3 mb-3">Privacy & Policy</h1>
         <div class="text-justify mb-4">
                 
       In order for the website to provide a safe and useful service, it is important for Kenabecha.com to collect, use, and share personal information.

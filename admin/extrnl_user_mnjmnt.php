@@ -9,22 +9,23 @@
             <div class="container-fluid">
 
                 <!-- Page Heading -->
-                <div class="row">
+                <div class="row" style="padding-bottom: 25%;">
                     <div class="col-lg-12">
                         <h1 class="page-header">
-                            External Users
-                            <small>External User List</small>
+                            List of Buyer/Seller
+                            <!-- <small>External User List</small> -->
                         </h1>
-                        <ol class="breadcrumb">
+                        <br><br>
+                        <!-- <ol class="breadcrumb">
                             <li>
                                 <i class="fa fa-dashboard"></i>  <a href="index.php">Dashboard</a>
                             </li>
                             <li class="active">
                                 <i class="fa fa-file"></i>extrnl_user_mnjmnt
                             </li>
-                        </ol>
+                        </ol> -->
                         
-                        <div class="row">
+                        <div class="row" >
                             <?php 
                                     if (isset($_GET['del_user_id'])) {
                                         $del_id = $_GET['del_user_id'];
@@ -50,10 +51,10 @@
 
                                  ?>
                             <div class="col-md-12">
-                                <h2 style="text-align: center;">View List</h2>
+                               <!--  <h2 style="text-align: center;">View List</h2> -->
                                 <div class="table-responsive">
                                     <table class="table table-bordered table-hover table-striped">
-                                        <h2>Users Management</h2>
+                                       <!--  <h2>Users Management</h2> -->
                                         <thead>
                                             <tr>
                                                 <th>Id</th>

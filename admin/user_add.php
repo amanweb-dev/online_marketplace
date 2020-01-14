@@ -13,19 +13,19 @@
                 <div class="row">
                     <div class="col-lg-12">
                         <h1 class="page-header">
-                            User
-                            <small>Add User</small>
-                        </h1>
-                        <ol class="breadcrumb">
+                            New Employee
+                            <!-- <small>Add Employee</small> -->
+                        </h1><br><br>
+                       <!--  <ol class="breadcrumb">
                             <li>
                                 <i class="fa fa-dashboard"></i>  <a href="index.php">Dashboard</a>
                             </li>
                             <li class="active">
                                 <i class="fa fa-file"></i>User_add
                             </li>
-                        </ol>
+                        </ol> -->
 
-                    <div class="row">
+                    <div class="row" style="padding-bottom: 25%;">
                         <div class="col-md-6" style="margin-left:20%">
                             <?php 
 
@@ -74,7 +74,7 @@
                                     </div>
 
                                      <div class="form-group">
-                                        <label>User Role</label>
+                                        <label>Role</label>
                                         <select class="form-control" name="user_role" id="">
                                             <option value="Founder">Founder</option>
                                             <option value="Finance">Finance</option>
@@ -91,7 +91,7 @@
 
                                      <div class="form-group">
                                         <label></label>
-                                        <input type="submit" value="Create User" name="create_user" class="btn btn-primary">
+                                        <input type="submit" value="Create Employee" name="create_user" class="btn btn-primary">
                                     </div>
 
                                  </form>

@@ -18,20 +18,21 @@ $$username=Session::get('user_role');
             <div class="container-fluid">
 
                 <!-- Page Heading -->
-                <div class="row">
+                <div class="row" style="padding-bottom: 25%;">
                     <div class="col-lg-12">
                         <h1 class="page-header">
                             My Profile
-                            <small>View Profile</small>
+                            <!-- <small>View Profile</small> -->
                         </h1>
-                        <ol class="breadcrumb">
+                        <br><br>
+                        <!-- <ol class="breadcrumb">
                             <li>
                                 <i class="fa fa-dashboard"></i>  <a href="dashboard.php">Dashboard</a>
                             </li>
                             <li class="active">
                                 <i class="fa fa-file"></i>
                             </li>
-                        </ol>
+                        </ol> -->
 
                         <?php 
                         	$query = "select * from dashboard_user where user_id = $useridnew ";

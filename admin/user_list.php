@@ -12,19 +12,19 @@
                 <div class="row">
                     <div class="col-lg-12">
                         <h1 class="page-header">
-                            Dashboard User
-                            <small>View User</small>
-                        </h1>
-                        <ol class="breadcrumb">
+                            All Employees
+                            <!-- <small>View User</small> -->
+                        </h1><br><br>
+                       <!--  <ol class="breadcrumb">
                             <li>
                                 <i class="fa fa-dashboard"></i>  <a href="index.php">Dashboard</a>
                             </li>
                             <li class="active">
                                 <i class="fa fa-file"></i>user_view
                             </li>
-                        </ol>
+                        </ol> -->
                         
-                        <div class="row">
+                        <div class="row" style="padding-bottom:35%;">
                             <?php 
                                     if (isset($_GET['del_user_id'])) {
                                         $del_id = $_GET['del_user_id'];
@@ -40,7 +40,7 @@
 
                                  ?>
                             <div class="col-md-8" style='margin-left: 15%'>
-                                <h2 style="text-align: center;">View User</h2>
+                                <!-- <h2 style="text-align: center;">View User</h2> -->
                                 <div class="table-responsive">
                                     <table class="table table-bordered table-hover table-striped">
                                         <thead>

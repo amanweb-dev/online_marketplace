@@ -98,8 +98,8 @@
                       </select>
                      </div>
 					 <div class="form-group" id="ifYes" style="display: none;">
-						<label for="pin">Enter Your Card Number:</label> 
-						<input type="text" class="form-control" id="pin" name="pin" /><br />
+						<label for="pin">Enter Your Card Pin:</label> 
+						<input type="password" class="form-control" id="pin" name="pin" /><br />
 					</div>
 					
                      <input type="hidden" name="seller_email" value="<?php echo $post_user_email; ?>">

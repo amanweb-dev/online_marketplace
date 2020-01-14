@@ -76,11 +76,13 @@
 				 		$view_post_query = "SELECT * FROM post WHERE post_category_id = $cats_id AND post_status = 1 AND selling_status = 0";
 
 				 $view_post_query_result = mysqli_query($connection,$view_post_query);
-						if (!$view_post_query_result) {
-							die("view_add_query_result failed ".mysqli_error($connection));
-						}
+						if ($view_post_query_result) {
 
-						while ($row=mysqli_fetch_assoc($view_post_query_result)) {
+							$cnt0 = mysqli_num_rows($view_post_query_result);
+
+							if ($cnt0>0){
+
+								while ($row=mysqli_fetch_assoc($view_post_query_result)) {
 							$post_ids=$row['post_id'];
 							$post_user_email=$row['post_user_email'];
 							$post_titles=$row['post_title'];
@@ -108,6 +110,27 @@
 								</div>
 
 								<?php	}
+
+							}else{ ?>
+
+								<div class="container">
+									<div class="row">
+										<div class="col-md-10">
+											<div class="fourzerofour">
+												<p>No Search Result Found</p>
+											</div>
+										</div>
+									</div>
+								</div>
+
+							<?php }
+
+							
+						
+
+						}else{
+									die("view_add_query_result failed ".mysqli_error($connection));
+								}
 				 		
 				 	}else if($cats_id == 'all' && empty($srch_text)){ ?>
 
@@ -118,9 +141,12 @@
 						global $connection;
 						$view_post_query = "SELECT * FROM post WHERE post_status = 1 AND selling_status = 0";
 						$view_post_query_result = mysqli_query($connection,$view_post_query);
-						if (!$view_post_query_result) {
-							die("view_add_query_result failed ".mysqli_error($connection));
-						}
+						if ($view_post_query_result) {
+
+							$cnt1 = mysqli_num_rows($view_post_query_result);
+
+							if ($cnt1>0) {
+
 
 						while ($row=mysqli_fetch_assoc($view_post_query_result)) {
 							$post_ids=$row['post_id'];
@@ -147,7 +173,28 @@
 							
 						</div>
 					</div>
-				<?php } ?>
+				<?php }
+								
+							}else{?>
+
+								<div class="container">
+									<div class="row">
+										<div class="col-md-10">
+											<div class="fourzerofour">
+												<p>No Search Result Found</p>
+											</div>
+										</div>
+									</div>
+								</div>
+
+
+
+							<?php }
+							
+						
+				 }else{
+					die("view_add_query_result failed ".mysqli_error($connection));
+				}?>
 					
 				</div>
 
@@ -161,10 +208,21 @@
 						}
 
 						$cnt = mysqli_num_rows($view_post_query_result);
-						if($cnt<1){
-							echo "No Search Result Found";
+						if($cnt<1){?>
 
-						}else{
+							<div class="container">
+									<div class="row">
+										<div class="col-md-10">
+											<div class="fourzerofour">
+												<p>No Search Result Found</p>
+											</div>
+										</div>
+									</div>
+								</div>
+							
+
+						
+						<?php }else{
 
 						while ($row=mysqli_fetch_assoc($view_post_query_result)) {
 							$post_ids=$row['post_id'];
@@ -207,10 +265,21 @@
 						}
 
 						$cnt = mysqli_num_rows($view_post_query_result);
-						if($cnt<1){
-							echo "No Search Result Found";
+						if($cnt<1){?>
 
-						}else{
+							<div class="container">
+									<div class="row">
+										<div class="col-md-10">
+											<div class="fourzerofour">
+												<p>Search item is not found</p>
+											</div>
+										</div>
+									</div>
+								</div>
+							
+
+						
+						<?php }else{
 
 						while ($row=mysqli_fetch_assoc($view_post_query_result)) {
 							$post_ids=$row['post_id'];
@@ -243,11 +312,21 @@
 
 
 
-				}else{
+				}else{?>
 
-					echo "No Search Result Found";
+							<div class="container">
+									<div class="row">
+										<div class="col-md-10">
+											<div class="fourzerofour">
+												<p>Search item is not found</p>
+											</div>
+										</div>
+									</div>
+								</div>
+							
 
-				}
+						
+						<?php }
 
 				 
 				 	}else{ ?>

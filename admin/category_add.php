@@ -13,20 +13,20 @@
                 <div class="row">
                     <div class="col-lg-12">
                         <h1 class="page-header">
-                            Category
-                            <small>Add </small>
+                            Category Manage & List
+                            <!-- <small>Add </small>
                             <small>View </small>
                             <small>Edit </small>
-                            <small>Delete Category</small>
+                            <small>Delete Category</small> -->
                         </h1>
-                        <ol class="breadcrumb">
+                        <!-- <ol class="breadcrumb">
                             <li>
                                 <i class="fa fa-dashboard"></i>  <a href="index.php">Dashboard</a>
                             </li>
                             <li class="active">
                                 <i class="fa fa-file"></i>category
                             </li>
-                        </ol>
+                        </ol> -->
 
                        <div class="row">
                            <div class="col-md-4">
@@ -75,14 +75,16 @@
 
                              ?>
                                  <form role="form" action="category_add.php" method="post" enctype="multipart/form-data">
+                                    <h2>Create Category</h2>
+                                    <br>
 
                                     <div class="form-group">
-                                        <label>Category Name</label>
-                                        <input type="text" name="cat_name" class="form-control" placeholder="Enter Nme">
+                                        <label> Name of New Category</label>
+                                        <input type="text" name="cat_name" class="form-control" placeholder="Enter Category Name">
                                     </div>
 
                                     <div class="form-group">
-                                        <label>Category Logo</label>
+                                        <label> Logo</label>
                                         <input type="file" name="img" class="form-control">
                                     </div>
 
@@ -110,7 +112,8 @@
 
                                  ?>
 
-                                <h2 style="text-align: center;">View Category</h2>
+                                <h2 style="text-align: center;">Manage Category</h2>
+                                <br>
                                 <div class="table-responsive">
                                     <table class="table table-bordered table-hover table-striped">
                                         <thead>
